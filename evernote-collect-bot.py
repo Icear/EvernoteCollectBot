@@ -38,10 +38,12 @@ else:
 if args.listen_only:
     logging.info('start listen only mode')
     # TODO add KeyboardInterrupt handler
+    offset = 0
     while True:
         logging.info('listening telegram bot message...')
-        updates = telegram_bot.get_updates()
+        updates = telegram_bot.get_updates(offset=offset)
         for update in updates:
             logging.info(f'recieved message "{update.message.text}" from user {update.message.from_user.username}, id: {update.message.from_user.id}')
             logging.debug(f'update')
+            offset = update.update_id + 1
         time.sleep(5) # wait 5 seconds
